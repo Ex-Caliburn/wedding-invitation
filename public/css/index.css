@@ -186,7 +186,7 @@ html, body {
   animation: rotate 3s linear infinite;
   animation-play-state: paused;
   color: #efefef;
-  box-shadow: 1px 2px 2px #777;
+  box-shadow: 1px 2px 5px #777;
 }
 .anchorBL {
   display: none !important;
