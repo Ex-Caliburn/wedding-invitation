@@ -6,7 +6,7 @@ const app = express()
 app.use('/public',express.static('public'))
 
 app.get('/', function (req, res) {
-  let html = fs.readFileSync('./index.html','utf-8')
+  let html = fs.readFileSync('./src/index.html','utf-8')
   res.header('Content-Type', 'text/html;charset=utf-8');
   res.send(html)
 })
