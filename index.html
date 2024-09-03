@@ -611,7 +611,7 @@
           <h4 class="js-animate animated animation-2000" data-animate="myzoomIn" data-time="24000"
             style="position: absolute;width: 100%;bottom: 6%;left: 0;z-index: 11;text-align: center;line-height: 28px;color: #fff;">
             10月1日<br>
-            湖南省株洲市珠江北路999号 
+            湖南省株洲市珠江北路999号
             <br>
             沄和酒楼 1楼万和厅
           </h4>
@@ -656,7 +656,7 @@
 
         var loadTimer = setInterval(() => {
           console.log(loadSum)
-          if (loadSum >= 8) {
+          if (loadSum >= 4) {
             start()
           }
         }, 300);
@@ -859,12 +859,18 @@
         }
       }
 
+      document.addEventListener('DOMContentLoaded', (event) => {
+        startPlayMp3()
+      });
       // 音乐播放控制
       window.onload = function () {
+        startPlayMp3()
+      }
+
+      function startPlayMp3() {
         let mp3 = document.querySelector('#mp3')
         let playBtn = document.querySelector('#play-btn')
         let play
-
         mp3.load()
 
         document.addEventListener("WeixinJSBridgeReady", function () {
@@ -876,6 +882,7 @@
           }
         }, false)
 
+        console.log(mp3.paused, mp3.readyState)
         play = !mp3.paused && mp3.readyState === 4
 
         if (play) {
@@ -897,6 +904,7 @@
             }
           }
         })
+
       }
     </script>
 </body>
