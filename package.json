@@ -1,31 +1,32 @@
 {
-  "name": "lucky",
+  "name": "invitation",
   "version": "1.0.0",
-  "description": "抽奖",
+  "description": "婚礼请柬",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=production"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "Ex-Caliburn",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "autoprefixer": "^10.4.14",
-    "babel-loader": "^9.1.2",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^5.0.0",
-    "html-webpack-plugin": "^5.5.3",
-    "image-minimizer-webpack-plugin": "^3.8.2",
-    "mini-css-extract-plugin": "^2.7.6",
-    "postcss": "^8.4.24",
-    "postcss-loader": "^7.3.3",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.86.0",
-    "webpack-cli": "^5.1.4"
-  },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.16.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ex-Caliburn/wedding-invitation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ex-Caliburn/wedding-invitation/issues"
+  },
+  "homepage": "https://github.com/Ex-Caliburn/wedding-invitation#readme",
+  "devDependencies": {
+    "fs-extra": "^11.2.0",
+    "terser": "^5.31.6",
+    "vite": "^4.3.9",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-imagemin": "^0.6.1"
   }
 }

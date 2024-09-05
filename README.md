@@ -1,5 +1,10 @@
 # weddingInvitations
 
+## 项目说明
+
+node 20+
+vite 5+
+
 结婚请柬 婚礼电子请帖 婚礼H5 邀请函
 
 clone 到本地可直接打开index.html 文件查看效果, 仅支持移动端, pc需使用手机模式
