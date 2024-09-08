@@ -8,64 +8,72 @@ if (isMobile !== false) {
   }, 300);
 }
 
-// wx.config({
-//   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//   appId: '', // 必填，公众号的唯一标识
-//   timestamp: '', // 必填，生成签名的时间戳
-//   nonceStr: '', // 必填，生成签名的随机串
-//   signature: '',// 必填，签名
-//   jsApiList: [] // 必填，需要使用的JS接口列表
-// });
+// promise
+const getSignPromise = new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+  // xhr.open("GET", location.origin + "/api/sign?url=" + location.href, true);
+  xhr.open(
+    "GET",
+    "http://loveisforever.cn" + "/api/sign?url=" + location.href,
+    true
+  );
+  xhr.send();
+  xhr.onload = () => {
+    if (xhr.readyState === xhr.DONE) {
+      if (xhr.status === 200) {
+        const result = JSON.parse(xhr.response);
+        console.log(result);
+        resolve(result);
+      }
+    }
+  };
+});
 
-// let config = {
-//   title: '彭佳仪&李霁野的婚礼',
-//   desc: '特别邀请您参加彭佳仪&李霁野的婚礼',
-//   link: 'http://loveisforever.cn',
-//   imgUrl: 'http://loveisforever.cn/public/favicon.png'
-// }
-// console.log('registerShare config', config)
-// wx.ready(function () {
-//   // 分享朋友
-//   //   title: config.title, // 分享标题
-//   //   desc: config.desc, // 分享描述
-//   //   imgUrl: config.imgUrl, // 分享图标
-//   //   link: config.link, // 分享链接，该链接域名必须与当前企业的可信域名一致
-//   wx.updateAppMessageShareData({
-//     ...config,
-//     type: 'link', // 分享类型,music、video或link，不填默认为link
-//     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空,
-//     success: function () {
-//       console.log('updateAppMessageShareData success')
-//       // 用户确认分享后执行的回调函数
-//       config.successFun && config.successFun()
-//     }
-//   })
+// 分享
+getSignPromise.then((res) => {
+  getWeShare(res);
+});
 
-//   // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）
-//   wx.updateTimelineShareData({
-//     ...config,
-//     // title: config.desc,
-//     type: 'link', // 分享类型,music、video或link，不填默认为link
-//     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空,
-//     success: function () {
-//       console.log('updateTimelineShareData  success')
-//       // 用户确认分享后执行的回调函数
-//       config.successFun && config.successFun()
-//     }
-//   })
+/***
+ * 微信分享
+ */
+const getWeShare = (params) => {
+  console.log("getWeShare params", params);
+  wx.config({
+    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: params.appId, // 必填，公众号的唯一标识
+    timestamp: params.timestamp, // 必填，生成签名的时间戳
+    nonceStr: params.nonceStr, // 必填，生成签名的随机串
+    signature: params.signature, // 必填，签名
+    jsApiList: [
+      "updateAppMessageShareData",
+      "updateTimelineShareData",
+      "onMenuShareQQ",
+      "onMenuShareWeibo",
+      "openLocation",
+    ], // 必填，需要使用的JS接口列表
+  });
 
-//   // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容（1.4.0）
-//   wx.onMenuShareAppMessage({
-//     ...config,
-//     type: 'link', // 分享类型,music、video或link，不填默认为link
-//     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空,
-//     success: function () {
-//       console.log('onMenuShareAppMessage success')
-//       // 用户确认分享后执行的回调函数
-//       config.successFun && config.successFun()
-//     }
-//   })
-// })
+  wx.ready(function () {
+    //需在用户可能点击分享按钮前就先调用
+
+    const data = {
+      title: "李霁野&彭佳仪的婚礼邀请",
+      desc: "我们将于2024年10月1日举行婚礼，诚挚邀请您的到来",
+      link: "http://loveisforever.cn",
+      imgUrl: "http://loveisforever.cn/public/photo/share.png",
+      success: function () {
+        // 设置成功
+        console.log("share success");
+      },
+    };
+
+    wx.onMenuShareQQ(data);
+    wx.onMenuShareWeibo(data);
+    wx.updateTimelineShareData(data);
+    wx.updateAppMessageShareData(data);
+  });
+};
 
 var domLists = [];
 var mapFlag = false;
@@ -122,6 +130,9 @@ function start() {
 }
 
 function clearTime() {
+  if (!domLists) {
+    return;
+  }
   domLists.forEach((dom, i, arr) => {
     if (dom.timer) {
       clearTimeout(dom.timer);
@@ -203,14 +214,25 @@ function initMap() {
 
     document.querySelector("#location-btn").addEventListener("click", () => {
       map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
-      // wx.openLocation({
-      //   latitude: mapCenter[0], // 纬度，浮点数，范围为90 ~ -90
-      //   longitude: mapCenter[1], // 经度，浮点数，范围为180 ~ -180。
-      //   name: '湖南省株洲市天元区珠江北路999号 沄和酒楼', // 位置名
-      //   address: '', // 地址详情说明
-      //   scale: 1, // 地图缩放级别,整型值,范围从1~28。默认为最大
-      //   infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-      // });
+      wx.openLocation({
+        latitude: mapCenter[0], // 纬度，浮点数，范围为90 ~ -90
+        longitude: mapCenter[1], // 经度，浮点数，范围为180 ~ -180。
+        name: "湖南省株洲市天元区珠江北路999号 沄和酒楼", // 位置名
+        address: "", // 地址详情说明
+        scale: 1, // 地图缩放级别,整型值,范围从1~28。默认为最大
+        infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
+      });
+    });
+    document.querySelector("#map").addEventListener("click", () => {
+      console.log("map click");
+      wx.openLocation({
+        latitude: mapCenter[0], // 纬度，浮点数，范围为90 ~ -90
+        longitude: mapCenter[1], // 经度，浮点数，范围为180 ~ -180。
+        name: "湖南省株洲市天元区珠江北路999号 沄和酒楼", // 位置名
+        address: "", // 地址详情说明
+        scale: 1, // 地图缩放级别,整型值,范围从1~28。默认为最大
+        infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
+      });
     });
   }
 }
@@ -234,7 +256,7 @@ function startPlayMp3() {
     function () {
       mp3.play();
       if (!mp3.paused) {
-        this.style.animationPlayState = "running";
+        playBtn.style.animationPlayState = "running";
         mp3.play();
         play = true;
       }
