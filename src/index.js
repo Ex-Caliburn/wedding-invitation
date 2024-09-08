@@ -152,6 +152,7 @@ function initMap() {
     mapFlag = true;
     // var mapCenter = [104.083002, 30.5621]
     var mapCenter = [113.099109, 27.831009];
+    // var mapCenter = [27.831009, 113.099109];
     var map = new BMap.Map("map", { minZoom: 10, maxZoom: 14 });
 
     map.centerAndZoom(new BMap.Point(mapCenter[0], mapCenter[1]), 13);
@@ -214,12 +215,13 @@ function initMap() {
 
     document.querySelector("#location-btn").addEventListener("click", () => {
       map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
+      mapCenter = [113.092581, 27.831009];
       wx.openLocation({
         latitude: mapCenter[1], // 纬度，浮点数，范围为90 ~ -90
         longitude: mapCenter[0], // 经度，浮点数，范围为180 ~ -180。
         name: "湖南省株洲市天元区珠江北路999号 沄和酒楼", // 位置名
         address: "", // 地址详情说明
-        scale: 1, // 地图缩放级别,整型值,范围从1~28。默认为最大
+        scale: 28, // 地图缩放级别,整型值,范围从1~28。默认为最大
         infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
       });
     });
@@ -287,4 +289,3 @@ function startPlayMp3() {
     }
   });
 }
-
