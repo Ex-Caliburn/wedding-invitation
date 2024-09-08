@@ -40,7 +40,7 @@ getSignPromise.then((res) => {
 const getWeShare = (params) => {
   console.log("getWeShare params", params);
   wx.config({
-    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
     appId: params.appId, // 必填，公众号的唯一标识
     timestamp: params.timestamp, // 必填，生成签名的时间戳
     nonceStr: params.nonceStr, // 必填，生成签名的随机串
@@ -215,8 +215,8 @@ function initMap() {
     document.querySelector("#location-btn").addEventListener("click", () => {
       map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
       wx.openLocation({
-        latitude: mapCenter[0], // 纬度，浮点数，范围为90 ~ -90
-        longitude: mapCenter[1], // 经度，浮点数，范围为180 ~ -180。
+        latitude: mapCenter[1], // 纬度，浮点数，范围为90 ~ -90
+        longitude: mapCenter[0], // 经度，浮点数，范围为180 ~ -180。
         name: "湖南省株洲市天元区珠江北路999号 沄和酒楼", // 位置名
         address: "", // 地址详情说明
         scale: 1, // 地图缩放级别,整型值,范围从1~28。默认为最大
@@ -287,3 +287,4 @@ function startPlayMp3() {
     }
   });
 }
+
