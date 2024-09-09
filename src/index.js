@@ -215,15 +215,15 @@ function initMap() {
 
     document.querySelector("#location-btn").addEventListener("click", () => {
       map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
-      // mapCenter = [113.092581, 27.831009];
-      // wx.openLocation({
-      //   latitude: mapCenter[1], // 纬度，浮点数，范围为90 ~ -90
-      //   longitude: mapCenter[0], // 经度，浮点数，范围为180 ~ -180。
-      //   name: "沄和酒楼", // 位置名
-      //   address: "湖南省株洲市天元区珠江北路999号", // 地址详情说明
-      //   scale: 28, // 地图缩放级别,整型值,范围从1~28。默认为最大
-      //   infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
-      // });
+      mapCenter = [113.092545, 27.831009];
+      wx.openLocation({
+        latitude: mapCenter[1], // 纬度，浮点数，范围为90 ~ -90
+        longitude: mapCenter[0], // 经度，浮点数，范围为180 ~ -180。
+        name: "沄和酒楼", // 位置名
+        address: "湖南省株洲市天元区珠江北路999号", // 地址详情说明
+        scale: 28, // 地图缩放级别,整型值,范围从1~28。默认为最大
+        infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
+      });
     });
     // document.querySelector("#map").addEventListener("click", () => {
     //   console.log("map click");
