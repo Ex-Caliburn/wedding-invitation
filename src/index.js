@@ -215,17 +215,24 @@ function initMap() {
 
     document.querySelector("#location-btn").addEventListener("click", () => {
       map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
-      // window.location.href = "https://j.map.baidu.com/e1/e1_";
-      let {latitude, longitude} = transformFromBaiduToGCJ(mapCenter[1], mapCenter[0]);
+      let { latitude, longitude } = transformFromBaiduToGCJ(
+        mapCenter[1],
+        mapCenter[0]
+      );
       // var mapCenter2 = [113.092545, 27.831009];
-      wx.openLocation({
-        latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
-        longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
-        name: "沄和酒楼", // 位置名
-        address: "湖南省株洲市天元区珠江北路999号", // 地址详情说明
-        scale: 28, // 地图缩放级别,整型值,范围从1~28。默认为最大
-        infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
-      });
+      try {
+        wx.openLocation({
+          latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+          longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+          name: "沄和酒楼", // 位置名
+          address: "湖南省株洲市天元区珠江北路999号", // 地址详情说明
+          scale: 28, // 地图缩放级别,整型值,范围从1~28。默认为最大
+          infoUrl: "", // 在查看位置界面底部显示的超链接,可点击跳转
+        });
+      } catch (error) {
+        window.location.href = "https://j.map.baidu.com/e1/e1_";
+        console.log("error", error);
+      }
     });
     // document.querySelector("#map").addEventListener("click", () => {
     //   console.log("map click");
@@ -242,8 +249,8 @@ function initMap() {
   }
 }
 
-function transformFromBaiduToGCJ (latitude, longitude) {
-  var xPi = 3.14159265358979324 * 3000.0 / 180.0;
+function transformFromBaiduToGCJ(latitude, longitude) {
+  var xPi = (3.14159265358979324 * 3000.0) / 180.0;
   var x = longitude - 0.0065;
   var y = latitude - 0.006;
   var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * xPi);
@@ -251,10 +258,10 @@ function transformFromBaiduToGCJ (latitude, longitude) {
   var a_latitude = z * Math.sin(theta);
   var a_longitude = z * Math.cos(theta);
   return {
-      latitude: a_latitude,
-      longitude: a_longitude
+    latitude: a_latitude,
+    longitude: a_longitude,
   };
-};
+}
 
 document.addEventListener("DOMContentLoaded", (event) => {
   startPlayMp3();
