@@ -219,7 +219,7 @@ function initMap() {
     ].forEach(
       (el) => {
         el.addEventListener("touchstart", () => {
-          map.panTo(new BMap.Point(mapCenter[0], mapCenter[1]));
+          console.log("openLocation touchstart");
           let { latitude, longitude } = transformFromBaiduToGCJ(
             mapCenter[1],
             mapCenter[0]
